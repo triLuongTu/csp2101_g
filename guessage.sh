@@ -13,6 +13,12 @@
 #3/ The user will then be told if the guess is either 
 #too high, too low or correct.
 
+#Create colour to add
+RED='\033[00;31m'
+YELLOW='\033[00;33m'
+GREEN='\033[00;32m'
+NCOL='\033[0m'
+
 int='^[0-9]+$' #create variable to check input(integer)
 
 #Using while loop to create a input loop until variable is an integer
@@ -22,20 +28,20 @@ while true; do
 
     #Create if function to check variable input(integers only)
     if ! [[ "$minAge" =~ $int ]]; then
-        echo "Error: Integer only. Please try again!"
+        echo -e "${RED}Error: Integer only.${NCOL} Please try again!"
     else
-        echo "Minimum age accepted."
+        echo -e "${GREEN}Minimum age accepted."
         #Prompt the player to type max age to create a range of random age number
-        read -p "Type the maximum age to create guess age game: " maxAge
+        read -p -e "${NCOL}Type the maximum age to create guess age game: " maxAge
 
         #Create if function to check variable input(integers only)
         if ! [[ "$maxAge" =~ $int ]]; then
-            echo "Error: Integer only. Please try again!"
+            echo -e "${RED}Error: Integer only.${NCOL} Please try again!"
         else
             if [[ $minAge -ge $maxAge ]]; then #Make sure minAge not >= maxAge
-                echo "Minimum age can not be equal or greater than max age. Try again."
+                echo -e "${RED}Minimum age can not be equal or greater than max age.${NCOL} Try again."
             else
-                echo "Maximum age accepted."
+                echo -e "${GREEN}Maximum age accepted."
                 break
             fi
         fi
@@ -45,12 +51,12 @@ done
 
 #Use user input to create random age (by using shuf command)in range minAge-maxAge
 age=$( shuf -i $minAge-$maxAge -n 1 )
-echo "Random age are created!"
+echo -e "${YELLOW}Random age are created!"
 
 #Using while loop to create a input loop until variable is an integer
 while true; do
     #Prompt the player to guess age number in the range they choose
-    read -p "Type the number of age to guess in range $minAge - $maxAge: " guessAge
+    read -p -e "${NCOL}Type the number of age to guess in range $minAge - $maxAge: " guessAge
     #Create if function to check variable input(integers only, e to exit)
     if [[ "$guessAge" = "e" ]]; then
         echo "The age is $age years old. Good bye!"
